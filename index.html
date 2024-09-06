@@ -1,0 +1,153 @@
+\<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter - Home</title>
+    <style>
+        body {
+            background: #002934;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .user-info strong {
+            color: #599fb3;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #387586;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #3d5878;
+        }
+
+        .post {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid white;
+        }
+
+        .post strong {
+            color: #3e95ae;
+        }
+
+        #posts {
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: scroll;
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+
+        .create-post {
+            margin-bottom: 20px;
+            float: right;
+            width: 30%;
+        }
+
+        .post-list {
+            float: left;
+            width: 65%;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+    <div class="container clearfix">
+        <h1>Welcome to Flutter</h1>
+        <div class="user-info">
+            <strong>{{ username }}</strong> | ByteScore: <strong id="bytes">{{ bytes }}</strong>
+        </div>
+        <div class="create-post">
+            <form id="postForm" method="post" action="{{ url_for('post') }}">
+                <input type="text" name="title" placeholder="Title" required>
+                <textarea name="content" placeholder="What's on your mind?" maxlength="1000" required></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+        <div id="posts" class="post-list">
+            {% for post in posts %}
+                <div class="post">
+                    <strong>{{ post.username }} ({{ post.bytes }} Bytes):</strong> <br>
+                    <strong>{{ post.title }}</strong> <br>
+                    {{ post.content }}
+                    <br>
+                    <form method="post" action="{{ url_for('comment', post_index=loop.index0) }}">
+                        <input type="text" name="comment" placeholder="Add a comment" required>
+                        <button type="submit">Comment</button>
+                    </form>
+                    <form method="post" action="{{ url_for('heart', post_index=loop.index0) }}">
+                        <button type="submit">❤️ {{ post.hearts }}</button>
+                    </form>
+                    <div id="comments-{{ loop.index0 }}">
+                        {% for comment in post.comments %}
+                            <div class="comment">{{ comment }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        function checkAccount() {
+            fetch('/check_account')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('bytes').innerText = data.bytes;
+                });
+        }
+
+        setInterval(checkAccount, 1000);
+    </script>
+</body>
+</html>

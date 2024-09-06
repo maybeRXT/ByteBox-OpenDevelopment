@@ -1,0 +1,68 @@
+body {
+    background: linear-gradient(to right, #000428, #003c4d);
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.container {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    text-align: center;
+    color: #003c4d;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #003c4d;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #002934;
+}
+
+.post {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.post strong {
+    color: #003c4d;
+}
+
+#posts {
+    margin-top: 20px;
+}
+
+#comments-0, #comments-1, #comments-2, #comments-3, #comments-4, #comments-5, #comments-6, #comments-7, #comments-8, #comments-9 {
+    margin-top: 10px;
+}
+
+#comments-0 div, #comments-1 div, #comments-2 div, #comments-3 div, #comments-4 div, #comments-5 div, #comments-6 div, #comments-7 div, #comments-8 div, #comments-9 div {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
